@@ -1,7 +1,7 @@
 import os
 import plot
 import pybullet_envs
-from agent import TD3
+from drl_implementation import TD3
 # parameters have bee tuned for the swingup task
 algo_params = {
     'prioritised': True,
