@@ -1,6 +1,5 @@
 import os
 import plot
-import json
 import pybullet_multigoal_gym as pmg
 from drl_implementation import GoalConditionedSAC
 algo_params = {
@@ -39,20 +38,17 @@ path = os.path.join(path, 'Push_PHER')
 
 for seed in seeds:
 
-    # env = pmg.make("KukaParallelGripPushSparseEnv-v0")
+    env = pmg.make("KukaParallelGripPushSparseEnv-v0")
+    # use the render env for visualization
+    # env = pmg.make("KukaParallelGripPushRenderSparseEnv-v0")
 
-    # seed_path = path + '/seed'+str(seed)
-    #
-    # agent = GoalConditionedSAC(algo_params=algo_params, env=env, path=seed_path, seed=seed)
-    # agent.run(test=False)
-    # seed_returns.append(agent.statistic_dict['epoch_test_return'])
-    # seed_success_rates.append(agent.statistic_dict['epoch_test_success_rate'])
-    # del env, agent
-
-    statistic_dict = json.load(open(os.path.join(path, 'seed'+str(seed), 'data', 'statistics.json')))
-    seed_returns.append(statistic_dict['epoch_test_return'])
-    seed_success_rates.append(statistic_dict['epoch_test_success_rate'])
-
+    seed_path = path + '/seed'+str(seed)
+    agent = GoalConditionedSAC(algo_params=algo_params, env=env, path=seed_path, seed=seed)
+    agent.run(test=False)
+    # agent.run(test=True, load_network_ep=50, sleep=0.05)
+    seed_returns.append(agent.statistic_dict['epoch_test_return'])
+    seed_success_rates.append(agent.statistic_dict['epoch_test_success_rate'])
+    del env, agent
 
 return_statistic = plot.get_mean_and_deviation(seed_returns, save_data=True,
                                                file_name=os.path.join(path, 'return_statistic.json'))

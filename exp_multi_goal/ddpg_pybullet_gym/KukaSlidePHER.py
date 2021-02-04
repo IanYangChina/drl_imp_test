@@ -44,6 +44,7 @@ for seed in seeds:
 
     agent = GoalConditionedDDPG(algo_params=algo_params, env=env, path=seed_path, seed=seed)
     agent.run(test=False)
+    # agent.run(test=True, load_network_ep=100, sleep=0.05)
     seed_returns.append(agent.statistic_dict['epoch_test_return'])
     seed_success_rates.append(agent.statistic_dict['epoch_test_success_rate'])
     del env, agent

@@ -38,12 +38,13 @@ path = os.path.join(path, 'Slide_PHER')
 
 for seed in seeds:
 
-    env = pmg.make("KukaParallelGripSlideSparseEnv-v0")
+    env = pmg.make("KukaParallelGripSlideRenderSparseEnv-v0")
 
     seed_path = path + '/seed'+str(seed)
 
     agent = GoalConditionedSAC(algo_params=algo_params, env=env, path=seed_path, seed=seed)
     agent.run(test=False)
+    # agent.run(test=True, load_network_ep=100, sleep=0.05)
     seed_returns.append(agent.statistic_dict['epoch_test_return'])
     seed_success_rates.append(agent.statistic_dict['epoch_test_success_rate'])
     del env, agent
