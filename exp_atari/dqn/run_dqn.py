@@ -1,7 +1,7 @@
 import os
 import plot
 import gym
-from agent import DQN
+from drl_implementation.agent.discrete_action.dqn import DQN
 algo_params = {
     'prioritised': True,
     'memory_capacity': int(1e6),

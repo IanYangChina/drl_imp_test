@@ -1,7 +1,7 @@
 import os
 import plot
 import pybullet_envs
-from agent import DDPG
+from drl_implementation import DDPG
 algo_params = {
     'prioritised': True,
     'memory_capacity': int(1e6),
