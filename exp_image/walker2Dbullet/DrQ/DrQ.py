@@ -12,7 +12,7 @@ drq_params = {
     'actor_learning_rate': 0.001,
     'critic_learning_rate': 0.001,
     'update_interval': 1,
-    'batch_size': 512,
+    'batch_size': 128,
     'optimization_steps': 1,
     'tau': 0.01,
     'discount_factor': 0.99,
@@ -32,7 +32,7 @@ drq_params = {
     'cuda_device_id': 1,
 }
 
-seeds = [11]
+seeds = [11, 22]
 seed_returns = []
 path = os.path.dirname(os.path.realpath(__file__))
 for seed in seeds:
