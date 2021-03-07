@@ -28,7 +28,7 @@ algo_params = {
     'training_episodes': 16,
     'testing_gap': 1,
     'testing_episodes': 30,
-    'saving_gap': 25,
+    'saving_gap': 50,
 }
 seeds = [11, 22, 33, 44]
 seed_returns = []

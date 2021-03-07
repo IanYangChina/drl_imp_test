@@ -23,12 +23,12 @@ algo_params = {
     'random_action_chance': 0.2,
     'noise_deviation': 0.05,
 
-    'training_epochs': 11,
+    'training_epochs': 51,
     'training_cycles': 50,
     'training_episodes': 16,
     'testing_gap': 1,
     'testing_episodes': 30,
-    'saving_gap': 10,
+    'saving_gap': 25,
 }
 seeds = [11, 22, 33, 44, 55, 66]
 seed_returns = []
@@ -38,7 +38,7 @@ path = os.path.join(path, 'Reach_PHER')
 
 for seed in seeds:
 
-    env = pmg.make("KukaParallelGripReachSparseEnv-v0")
+    env = pmg.make("KukaParallelGripPickAndPlaceSparseEnv-v0")
 
     seed_path = path + '/seed'+str(seed)
 
