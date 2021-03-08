@@ -3,9 +3,9 @@ import plot
 import pybullet_multigoal_gym as pmg
 from drl_implementation import GoalConditionedSAC
 algo_params = {
-    'hindsight': True,
+    'hindsight': False,
     'her_sampling_strategy': 'future',
-    'prioritised': True,
+    'prioritised': False,
     'memory_capacity': int(1e6),
     'actor_learning_rate': 0.001,
     'critic_learning_rate': 0.001,
@@ -23,22 +23,22 @@ algo_params = {
     'actor_update_interval': 1,
     'critic_target_update_interval': 1,
 
-    'training_epochs': 51,
+    'training_epochs': 11,
     'training_cycles': 50,
     'training_episodes': 16,
     'testing_gap': 1,
     'testing_episodes': 30,
-    'saving_gap': 25,
+    'saving_gap': 10,
 }
-seeds = [22, 33, 44]
+seeds = [11, 22, 33, 44]
 seed_returns = []
 seed_success_rates = []
 path = os.path.dirname(os.path.realpath(__file__))
-path = os.path.join(path, 'PickAndPlace_PHER')
+path = os.path.join(path, 'Reach')
 
 for seed in seeds:
 
-    env = pmg.make("KukaParallelGripPickAndPlaceSparseEnv-v0")
+    env = pmg.make("KukaParallelGripReachSparseEnv-v0")
 
     seed_path = path + '/seed'+str(seed)
 

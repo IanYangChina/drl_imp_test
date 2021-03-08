@@ -30,11 +30,11 @@ algo_params = {
     'testing_episodes': 30,
     'saving_gap': 25,
 }
-seeds = [11, 22, 33, 44, 55, 66]
+seeds = [22, 33, 44]
 seed_returns = []
 seed_success_rates = []
 path = os.path.dirname(os.path.realpath(__file__))
-path = os.path.join(path, 'Reach_PHER')
+path = os.path.join(path, 'PickAndPlace_PHER')
 
 for seed in seeds:
 

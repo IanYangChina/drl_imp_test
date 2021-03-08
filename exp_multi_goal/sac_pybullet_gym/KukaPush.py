@@ -3,9 +3,9 @@ import plot
 import pybullet_multigoal_gym as pmg
 from drl_implementation import GoalConditionedSAC
 algo_params = {
-    'hindsight': True,
+    'hindsight': False,
     'her_sampling_strategy': 'future',
-    'prioritised': True,
+    'prioritised': False,
     'memory_capacity': int(1e6),
     'actor_learning_rate': 0.001,
     'critic_learning_rate': 0.001,
@@ -30,20 +30,22 @@ algo_params = {
     'testing_episodes': 30,
     'saving_gap': 25,
 }
-seeds = [22, 33, 44]
+seeds = [11, 22, 33, 44]
 seed_returns = []
 seed_success_rates = []
 path = os.path.dirname(os.path.realpath(__file__))
-path = os.path.join(path, 'PickAndPlace_PHER')
+path = os.path.join(path, 'Push')
 
 for seed in seeds:
 
-    env = pmg.make("KukaParallelGripPickAndPlaceSparseEnv-v0")
+    env = pmg.make("KukaParallelGripPushSparseEnv-v0")
+    # use the render env for visualization
+    # env = pmg.make("KukaParallelGripPushRenderSparseEnv-v0")
 
     seed_path = path + '/seed'+str(seed)
-
     agent = GoalConditionedSAC(algo_params=algo_params, env=env, path=seed_path, seed=seed)
     agent.run(test=False)
+    # agent.run(test=True, load_network_ep=50, sleep=0.05)
     seed_returns.append(agent.statistic_dict['epoch_test_return'])
     seed_success_rates.append(agent.statistic_dict['epoch_test_success_rate'])
     del env, agent

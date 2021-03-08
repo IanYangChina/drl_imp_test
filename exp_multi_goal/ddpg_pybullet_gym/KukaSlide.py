@@ -3,9 +3,9 @@ import plot
 import pybullet_multigoal_gym as pmg
 from drl_implementation import GoalConditionedDDPG
 algo_params = {
-    'hindsight': True,
+    'hindsight': False,
     'her_sampling_strategy': 'future',
-    'prioritised': True,
+    'prioritised': False,
     'memory_capacity': int(1e6),
     'actor_learning_rate': 0.001,
     'critic_learning_rate': 0.001,
@@ -23,27 +23,28 @@ algo_params = {
     'random_action_chance': 0.2,
     'noise_deviation': 0.05,
 
-    'training_epochs': 11,
+    'training_epochs': 101,
     'training_cycles': 50,
     'training_episodes': 16,
     'testing_gap': 1,
     'testing_episodes': 30,
-    'saving_gap': 10,
+    'saving_gap': 50,
 }
-seeds = [11, 22, 33, 44, 55, 66]
+seeds = [11, 22, 33, 44]
 seed_returns = []
 seed_success_rates = []
 path = os.path.dirname(os.path.realpath(__file__))
-path = os.path.join(path, 'Reach_PHER')
+path = os.path.join(path, 'Slide')
 
 for seed in seeds:
 
-    env = pmg.make("KukaParallelGripReachSparseEnv-v0")
+    env = pmg.make("KukaParallelGripSlideSparseEnv-v0")
 
     seed_path = path + '/seed'+str(seed)
 
     agent = GoalConditionedDDPG(algo_params=algo_params, env=env, path=seed_path, seed=seed)
     agent.run(test=False)
+    # agent.run(test=True, load_network_ep=100, sleep=0.05)
     seed_returns.append(agent.statistic_dict['epoch_test_return'])
     seed_success_rates.append(agent.statistic_dict['epoch_test_success_rate'])
     del env, agent
