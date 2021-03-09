@@ -30,7 +30,7 @@ algo_params = {
     'testing_episodes': 30,
     'saving_gap': 25,
 }
-seeds = [22, 33, 44]
+seeds = [11, 22, 33, 44]
 seed_returns = []
 seed_success_rates = []
 path = os.path.dirname(os.path.realpath(__file__))
@@ -38,7 +38,14 @@ path = os.path.join(path, 'PickAndPlace_PHER')
 
 for seed in seeds:
 
-    env = pmg.make("KukaParallelGripPickAndPlaceSparseEnv-v0")
+    env = pmg.make_env(task='pick_and_place',
+                       gripper='parallel_jaw',
+                       render=False,
+                       binary_reward=True,
+                       max_episode_steps=50,
+                       image_observation=False,
+                       depth_image=False,
+                       goal_image=False)
 
     seed_path = path + '/seed'+str(seed)
 

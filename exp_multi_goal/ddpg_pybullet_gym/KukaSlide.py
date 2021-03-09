@@ -23,12 +23,12 @@ algo_params = {
     'random_action_chance': 0.2,
     'noise_deviation': 0.05,
 
-    'training_epochs': 101,
+    'training_epochs': 51,
     'training_cycles': 50,
     'training_episodes': 16,
     'testing_gap': 1,
     'testing_episodes': 30,
-    'saving_gap': 50,
+    'saving_gap': 25,
 }
 seeds = [11, 22, 33, 44]
 seed_returns = []
@@ -38,7 +38,14 @@ path = os.path.join(path, 'Slide')
 
 for seed in seeds:
 
-    env = pmg.make("KukaParallelGripSlideSparseEnv-v0")
+    env = pmg.make_env(task='slide',
+                       gripper='parallel_jaw',
+                       render=False,
+                       binary_reward=True,
+                       max_episode_steps=50,
+                       image_observation=False,
+                       depth_image=False,
+                       goal_image=False)
 
     seed_path = path + '/seed'+str(seed)
 

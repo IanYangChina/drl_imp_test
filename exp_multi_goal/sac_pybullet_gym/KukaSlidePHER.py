@@ -23,7 +23,7 @@ algo_params = {
     'actor_update_interval': 1,
     'critic_target_update_interval': 1,
 
-    'training_epochs': 101,
+    'training_epochs': 51,
     'training_cycles': 50,
     'training_episodes': 16,
     'testing_gap': 1,
@@ -38,7 +38,14 @@ path = os.path.join(path, 'Slide_PHER')
 
 for seed in seeds:
 
-    env = pmg.make("KukaParallelGripSlideSparseEnv-v0")
+    env = pmg.make_env(task='slide',
+                       gripper='parallel_jaw',
+                       render=False,
+                       binary_reward=True,
+                       max_episode_steps=50,
+                       image_observation=False,
+                       depth_image=False,
+                       goal_image=False)
 
     seed_path = path + '/seed'+str(seed)
 
