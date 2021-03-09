@@ -1,10 +1,9 @@
 import json
 import numpy as np
 import matplotlib as mpl
-mpl.use('Agg')
 import matplotlib.pyplot as plt
 from copy import deepcopy as dcp
-from mpl_toolkits.axes_grid1 import make_axes_locatable, axes_size
+mpl.use('Agg')
 
 
 def smoothed_plot(file, data, x_label="Timesteps", y_label="Success rate", window=5):
@@ -51,13 +50,14 @@ def smoothed_plot_multi_line(file, data,
     plt.close()
 
 
-def smoothed_plot_mean_deviation(file, data_dict_list, legend=None, legend_loc="upper right", title=None,
-                                 x_label='Timesteps', y_label="Success rate", window=5):
+def smoothed_plot_mean_deviation(file, data_dict_list, legend=None, title=None, file_formats='png',
+                                 x_label='Timesteps', y_label="Success rate", window=5,
+                                 legend_title=None, legend_loc='lower left',
+                                 legend_bbox_to_anchor=(0, 0.98), legend_ncol=4, legend_frame=False):
     colors = ['tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple', 'tab:brown']
     plt.ylabel(y_label)
     plt.xlabel(x_label)
-    if title is not None:
-        plt.title(title)
+    plt.title(title)
     if not isinstance(data_dict_list, list):
         data_dict_list = [data_dict_list]
     if x_label == "Epoch":
@@ -79,8 +79,12 @@ def smoothed_plot_mean_deviation(file, data_dict_list, legend=None, legend_loc="
         plt.plot(x, case_data["mean"], color=colors[i])
 
     if legend is not None:
-        plt.legend(legend, loc=legend_loc)
-    plt.savefig(file, bbox_inches='tight', dpi=500)
+        plt.legend(legend, title=legend_title, loc=legend_loc, bbox_to_anchor=legend_bbox_to_anchor, ncol=legend_ncol, frameon=legend_frame)
+    if type(file_formats) == list:
+        for file_format in file_formats:
+            plt.savefig(file+'.'+file_format, bbox_inches='tight', dpi=500, format=file_format)
+    else:
+        plt.savefig(file+'.'+file_formats, bbox_inches='tight', dpi=500, format=file_formats)
     plt.close()
 
 
