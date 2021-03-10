@@ -51,11 +51,12 @@ def smoothed_plot_multi_line(file, data,
 
 
 def smoothed_plot_mean_deviation(file, data_dict_list, legend=None, title=None, file_formats='png',
-                                 x_label='Timesteps', y_label="Success rate", window=5,
+                                 x_label='Timesteps', y_label="Success rate", ylim=(-0.05, 1.05), window=5,
                                  legend_title=None, legend_loc='lower left',
                                  legend_bbox_to_anchor=(0, 0.98), legend_ncol=4, legend_frame=False):
     colors = ['tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple', 'tab:brown']
     plt.ylabel(y_label)
+    plt.ylim(ylim)
     plt.xlabel(x_label)
     plt.title(title)
     if not isinstance(data_dict_list, list):
