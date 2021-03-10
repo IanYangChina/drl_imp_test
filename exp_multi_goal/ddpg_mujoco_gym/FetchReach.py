@@ -3,9 +3,9 @@ import plot
 import gym
 from drl_implementation import GoalConditionedDDPG
 algo_params = {
-    'hindsight': True,
+    'hindsight': False,
     'her_sampling_strategy': 'future',
-    'prioritised': True,
+    'prioritised': False,
     'memory_capacity': int(1e6),
     'actor_learning_rate': 0.001,
     'critic_learning_rate': 0.001,
@@ -23,22 +23,24 @@ algo_params = {
     'random_action_chance': 0.2,
     'noise_deviation': 0.05,
 
-    'training_epochs': 101,
+    'training_epochs': 11,
     'training_cycles': 50,
     'training_episodes': 16,
     'testing_gap': 1,
     'testing_episodes': 30,
-    'saving_gap': 50,
+    'saving_gap': 10,
+
+    'cuda_device_id': 1
 }
 seeds = [11]
 seed_returns = []
 seed_success_rates = []
 path = os.path.dirname(os.path.realpath(__file__))
-path = os.path.join(path, 'Slide_PHER')
+path = os.path.join(path, 'Reach')
 
 for seed in seeds:
 
-    env = gym.make("FetchSlide-v1")
+    env = gym.make("FetchReach-v1")
 
     seed_path = path + '/seed'+str(seed)
 
