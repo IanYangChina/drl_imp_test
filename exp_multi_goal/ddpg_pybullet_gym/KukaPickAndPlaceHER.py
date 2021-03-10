@@ -5,7 +5,7 @@ from drl_implementation import GoalConditionedDDPG
 algo_params = {
     'hindsight': True,
     'her_sampling_strategy': 'future',
-    'prioritised': True,
+    'prioritised': False,
     'memory_capacity': int(1e6),
     'actor_learning_rate': 0.001,
     'critic_learning_rate': 0.001,
@@ -34,7 +34,7 @@ seeds = [11, 22, 33, 44]
 seed_returns = []
 seed_success_rates = []
 path = os.path.dirname(os.path.realpath(__file__))
-path = os.path.join(path, 'PickAndPlace_PHER')
+path = os.path.join(path, 'PickAndPlace_HER')
 
 for seed in seeds:
 

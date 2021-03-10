@@ -32,7 +32,7 @@ algo_params = {
 
     'cuda_device_id': 1
 }
-seeds = [11]
+seeds = [11, 22, 33, 44]
 seed_returns = []
 seed_success_rates = []
 path = os.path.dirname(os.path.realpath(__file__))
