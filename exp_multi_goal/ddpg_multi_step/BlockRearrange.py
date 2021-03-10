@@ -1,36 +1,36 @@
 import os
 import plot
 import pybullet_multigoal_gym as pmg
-from drl_implementation import GoalConditionedSAC
+from drl_implementation import GoalConditionedDDPG
 algo_params = {
-    'hindsight': True,
+    'hindsight': False,
     'her_sampling_strategy': 'future',
     'prioritised': False,
     'memory_capacity': int(1e6),
     'actor_learning_rate': 0.001,
     'critic_learning_rate': 0.001,
+    'Q_weight_decay': 0.0,
     'update_interval': 1,
     'batch_size': 128,
     'optimization_steps': 40,
-    'tau': 0.005,
-    'clip_value': 50,
+    'tau': 0.05,
     'discount_factor': 0.98,
+    'clip_value': 50,
     'discard_time_limit': True,
     'terminate_on_achieve': False,
     'observation_normalization': True,
 
-    'alpha': 0.5,
-    'actor_update_interval': 1,
-    'critic_target_update_interval': 1,
+    'random_action_chance': 0.2,
+    'noise_deviation': 0.05,
 
-    'training_epochs': 101,
+    'training_epochs': 51,
     'training_cycles': 50,
     'training_episodes': 16,
     'testing_gap': 1,
     'testing_episodes': 30,
-    'saving_gap': 50,
+    'saving_gap': 25,
 }
-seeds = [11]
+seeds = [11, 22, 33, 44]
 seed_returns = []
 seed_success_rates = []
 path = os.path.dirname(os.path.realpath(__file__))
@@ -42,7 +42,7 @@ for seed in seeds:
 
     seed_path = path + '/seed'+str(seed)
 
-    agent = GoalConditionedSAC(algo_params=algo_params, env=env, path=seed_path, seed=seed)
+    agent = GoalConditionedDDPG(algo_params=algo_params, env=env, path=seed_path, seed=seed)
     agent.run(test=False)
     seed_returns.append(agent.statistic_dict['epoch_test_return'])
     seed_success_rates.append(agent.statistic_dict['epoch_test_success_rate'])
