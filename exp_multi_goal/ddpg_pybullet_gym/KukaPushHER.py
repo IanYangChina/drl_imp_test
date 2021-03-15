@@ -34,11 +34,11 @@ seeds = [11, 22, 33, 44]
 seed_returns = []
 seed_success_rates = []
 path = os.path.dirname(os.path.realpath(__file__))
-path = os.path.join(path, 'PickAndPlace_HER')
+path = os.path.join(path, 'Push_HER')
 
 for seed in seeds:
 
-    env = pmg.make_env(task='pick_and_place',
+    env = pmg.make_env(task='push',
                        gripper='parallel_jaw',
                        render=False,
                        binary_reward=True,
@@ -46,10 +46,12 @@ for seed in seeds:
                        image_observation=False,
                        depth_image=False,
                        goal_image=False)
+
     seed_path = path + '/seed'+str(seed)
 
     agent = GoalConditionedDDPG(algo_params=algo_params, env=env, path=seed_path, seed=seed)
     agent.run(test=False)
+    # agent.run(test=True, load_network_ep=100, sleep=0.05)
     seed_returns.append(agent.statistic_dict['epoch_test_return'])
     seed_success_rates.append(agent.statistic_dict['epoch_test_success_rate'])
     del env, agent

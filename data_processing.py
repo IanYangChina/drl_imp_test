@@ -24,5 +24,5 @@ plot.smoothed_plot_mean_deviation(file=os.path.join(path, 'src', 'success_rate_'
                                           'Bullet-DDPG-HER'],
                                   legend_title=env+' (4 seeds)',
                                   legend_loc='lower left', legend_bbox_to_anchor=(0.1, 0.98), legend_ncol=2, legend_frame=False,
-                                  window=1,
+                                  window=5,
                                   x_label='Epoch', y_label='Average test returns')

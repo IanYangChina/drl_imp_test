@@ -3,7 +3,7 @@ import plot
 import pybullet_multigoal_gym as pmg
 from drl_implementation import GoalConditionedDDPG
 algo_params = {
-    'hindsight': False,
+    'hindsight': True,
     'her_sampling_strategy': 'future',
     'prioritised': False,
     'memory_capacity': int(1e6),
@@ -15,7 +15,7 @@ algo_params = {
     'optimization_steps': 40,
     'tau': 0.05,
     'discount_factor': 0.98,
-    'clip_value': 50,
+    'clip_value': 100,
     'discard_time_limit': True,
     'terminate_on_achieve': False,
     'observation_normalization': True,
@@ -23,35 +23,39 @@ algo_params = {
     'random_action_chance': 0.2,
     'noise_deviation': 0.05,
 
-    'training_epochs': 51,
+    'curriculum': True,
+
+    'training_epochs': 201,
     'training_cycles': 50,
     'training_episodes': 16,
     'testing_gap': 1,
     'testing_episodes': 30,
-    'saving_gap': 25,
+    'saving_gap': 50,
+
+    'cuda_device_id': 1
 }
-seeds = [11, 22, 33, 44]
+seeds = [11]
 seed_returns = []
 seed_success_rates = []
+num_total_episodes = algo_params['training_epochs']*algo_params['training_cycles']*algo_params['training_episodes']
 path = os.path.dirname(os.path.realpath(__file__))
-path = os.path.join(path, 'Slide')
+path = os.path.join(path, 'BlockRearrange_2_crcl')
 
 for seed in seeds:
 
-    env = pmg.make_env(task='slide',
+    env = pmg.make_env(task='block_rearrange',
                        gripper='parallel_jaw',
+                       num_block=2,
                        render=False,
                        binary_reward=True,
-                       max_episode_steps=50,
                        image_observation=False,
-                       depth_image=False,
-                       goal_image=False)
+                       use_curriculum=False,
+                       num_goals_to_generate=num_total_episodes)
 
     seed_path = path + '/seed'+str(seed)
 
     agent = GoalConditionedDDPG(algo_params=algo_params, env=env, path=seed_path, seed=seed)
     agent.run(test=False)
-    # agent.run(test=True, load_network_ep=100, sleep=0.05)
     seed_returns.append(agent.statistic_dict['epoch_test_return'])
     seed_success_rates.append(agent.statistic_dict['epoch_test_success_rate'])
     del env, agent

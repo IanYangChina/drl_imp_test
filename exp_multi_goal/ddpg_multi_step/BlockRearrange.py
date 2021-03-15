@@ -15,7 +15,7 @@ algo_params = {
     'optimization_steps': 40,
     'tau': 0.05,
     'discount_factor': 0.98,
-    'clip_value': 200,
+    'clip_value': 100,
     'discard_time_limit': True,
     'terminate_on_achieve': False,
     'observation_normalization': True,
@@ -23,7 +23,7 @@ algo_params = {
     'random_action_chance': 0.2,
     'noise_deviation': 0.05,
 
-    'curriculum': True,
+    'curriculum': False,
 
     'training_epochs': 201,
     'training_cycles': 50,
@@ -39,17 +39,18 @@ seed_returns = []
 seed_success_rates = []
 num_total_episodes = algo_params['training_epochs']*algo_params['training_cycles']*algo_params['training_episodes']
 path = os.path.dirname(os.path.realpath(__file__))
-path = os.path.join(path, 'BlockRearrange_3_crcl')
+path = os.path.join(path, 'BlockRearrange_2')
 
 for seed in seeds:
 
     env = pmg.make_env(task='block_rearrange',
                        gripper='parallel_jaw',
-                       num_block=3,
+                       num_block=2,
                        render=False,
                        binary_reward=True,
                        image_observation=False,
-                       use_curriculum=True,
+                       max_episode_steps=75,
+                       use_curriculum=False,
                        num_goals_to_generate=num_total_episodes)
 
     seed_path = path + '/seed'+str(seed)
