@@ -1,9 +1,10 @@
 import os
 import plot
-import gym
+import json
+import pybullet_multigoal_gym as pmg
 from drl_implementation import GoalConditionedDDPG
 algo_params = {
-    'hindsight': False,
+    'hindsight': True,
     'her_sampling_strategy': 'future',
     'prioritised': False,
     'memory_capacity': int(1e6),
@@ -28,19 +29,24 @@ algo_params = {
     'training_episodes': 16,
     'testing_gap': 1,
     'testing_episodes': 30,
-    'saving_gap': 50,
-
-    'cuda_device_id': 1
+    'saving_gap': 25,
 }
 seeds = [11, 22, 33, 44]
 seed_returns = []
 seed_success_rates = []
 path = os.path.dirname(os.path.realpath(__file__))
-path = os.path.join(path, 'Push')
+path = os.path.join(path, 'Reach_HER')
 
 for seed in seeds:
 
-    env = gym.make("FetchPush-v1")
+    env = pmg.make_env(task='reach',
+                       gripper='parallel_jaw',
+                       render=False,
+                       binary_reward=True,
+                       max_episode_steps=50,
+                       image_observation=False,
+                       depth_image=False,
+                       goal_image=False)
 
     seed_path = path + '/seed'+str(seed)
 
@@ -53,10 +59,10 @@ for seed in seeds:
 
 return_statistic = plot.get_mean_and_deviation(seed_returns, save_data=True,
                                                file_name=os.path.join(path, 'return_statistic.json'))
-plot.smoothed_plot_mean_deviation(path + '/returns.png', return_statistic, x_label='Epoch', y_label='Average returns')
+plot.smoothed_plot_mean_deviation(path + '/returns', return_statistic, x_label='Epoch', y_label='Average returns')
 
 
 success_rate_statistic = plot.get_mean_and_deviation(seed_success_rates, save_data=True,
                                                      file_name=os.path.join(path, 'success_rate_statistic.json'))
-plot.smoothed_plot_mean_deviation(path + '/success_rates.png', success_rate_statistic,
+plot.smoothed_plot_mean_deviation(path + '/success_rates', success_rate_statistic,
                                   x_label='Epoch', y_label='Success rates')

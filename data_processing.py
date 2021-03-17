@@ -4,20 +4,21 @@ import json
 
 path = os.getcwd()
 
-env = 'PickAndPlace'
+env = 'Slide'
+data = 'return'
 
-mujoco_ddpg = json.load(open(os.path.join(path, 'exp_multi_goal', 'ddpg_mujoco_gym', env, 'success_rate_statistic.json')))
-mujoco_ddpg_her = json.load(open(os.path.join(path, 'exp_multi_goal', 'ddpg_mujoco_gym', env+'_HER', 'success_rate_statistic.json')))
-bullet_ddpg = json.load(open(os.path.join(path, 'exp_multi_goal', 'ddpg_pybullet_gym', env, 'success_rate_statistic.json')))
-bullet_ddpg_her = json.load(open(os.path.join(path, 'exp_multi_goal', 'ddpg_pybullet_gym', env+'_HER', 'success_rate_statistic.json')))
+mujoco_ddpg = json.load(open(os.path.join(path, 'exp_multi_goal', 'ddpg_mujoco_gym', env, data+'_statistic.json')))
+mujoco_ddpg_her = json.load(open(os.path.join(path, 'exp_multi_goal', 'ddpg_mujoco_gym', env+'_HER', data+'_statistic.json')))
+bullet_ddpg = json.load(open(os.path.join(path, 'exp_multi_goal', 'ddpg_pybullet_gym', env, data+'_statistic.json')))
+bullet_ddpg_her = json.load(open(os.path.join(path, 'exp_multi_goal', 'ddpg_pybullet_gym', env+'_HER', data+'_statistic.json')))
 
-plot.smoothed_plot_mean_deviation(file=os.path.join(path, 'src', 'success_rate_'+env),
+plot.smoothed_plot_mean_deviation(file=os.path.join(path, 'src', data+'_'+env),
                                   data_dict_list=[mujoco_ddpg, mujoco_ddpg_her, bullet_ddpg, bullet_ddpg_her],
                                   file_formats=[
                                       'pdf',
                                       'png'
                                   ],
-                                  ylim=(-0.05, 1.05),
+                                  # ylim=(-30, -0),
                                   legend=['Mujoco-DDPG',
                                           'Mujoco-DDPG-HER',
                                           'Bullet-DDPG',

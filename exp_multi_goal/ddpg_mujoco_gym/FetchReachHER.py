@@ -53,10 +53,10 @@ for seed in seeds:
 
 return_statistic = plot.get_mean_and_deviation(seed_returns, save_data=True,
                                                file_name=os.path.join(path, 'return_statistic.json'))
-plot.smoothed_plot_mean_deviation(path + '/returns.png', return_statistic, x_label='Epoch', y_label='Average returns')
+plot.smoothed_plot_mean_deviation(path + '/returns', return_statistic, x_label='Epoch', y_label='Average returns')
 
 
 success_rate_statistic = plot.get_mean_and_deviation(seed_success_rates, save_data=True,
                                                      file_name=os.path.join(path, 'success_rate_statistic.json'))
-plot.smoothed_plot_mean_deviation(path + '/success_rates.png', success_rate_statistic,
+plot.smoothed_plot_mean_deviation(path + '/success_rates', success_rate_statistic,
                                   x_label='Epoch', y_label='Success rates')

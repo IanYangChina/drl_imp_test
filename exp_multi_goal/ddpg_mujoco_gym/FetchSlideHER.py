@@ -1,5 +1,6 @@
 import os
 import plot
+import json
 import gym
 from drl_implementation import GoalConditionedDDPG
 algo_params = {
@@ -32,7 +33,7 @@ algo_params = {
 
     'cuda_device_id': 1
 }
-seeds = [11, 22, 33, 44]
+seeds = [22, 33, 44]
 seed_returns = []
 seed_success_rates = []
 path = os.path.dirname(os.path.realpath(__file__))
@@ -40,23 +41,25 @@ path = os.path.join(path, 'Slide_HER')
 
 for seed in seeds:
 
-    env = gym.make("FetchSlide-v1")
+    # env = gym.make("FetchSlide-v1")
 
     seed_path = path + '/seed'+str(seed)
 
-    agent = GoalConditionedDDPG(algo_params=algo_params, env=env, path=seed_path, seed=seed)
-    agent.run(test=False)
+    # agent = GoalConditionedDDPG(algo_params=algo_params, env=env, path=seed_path, seed=seed)
+    # agent.run(test=False)
     # agent.run(test=True, load_network_ep=100, sleep=0.05)
-    seed_returns.append(agent.statistic_dict['epoch_test_return'])
-    seed_success_rates.append(agent.statistic_dict['epoch_test_success_rate'])
-    del env, agent
+    # seed_returns.append(agent.statistic_dict['epoch_test_return'])
+    # seed_success_rates.append(agent.statistic_dict['epoch_test_success_rate'])
+    # del env, agent
+    seed_returns.append(json.load(open(os.path.join(seed_path, 'data', 'epoch_test_return.json'))))
+    seed_success_rates.append(json.load(open(os.path.join(seed_path, 'data', 'epoch_test_success_rate.json'))))
 
 return_statistic = plot.get_mean_and_deviation(seed_returns, save_data=True,
                                                file_name=os.path.join(path, 'return_statistic.json'))
-plot.smoothed_plot_mean_deviation(path + '/returns.png', return_statistic, x_label='Epoch', y_label='Average returns')
+plot.smoothed_plot_mean_deviation(path + '/returns', return_statistic, x_label='Epoch', y_label='Average returns')
 
 
 success_rate_statistic = plot.get_mean_and_deviation(seed_success_rates, save_data=True,
                                                      file_name=os.path.join(path, 'success_rate_statistic.json'))
-plot.smoothed_plot_mean_deviation(path + '/success_rates.png', success_rate_statistic,
+plot.smoothed_plot_mean_deviation(path + '/success_rates', success_rate_statistic,
                                   x_label='Epoch', y_label='Success rates')
