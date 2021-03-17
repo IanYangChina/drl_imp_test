@@ -24,23 +24,24 @@ algo_params = {
     'random_action_chance': 0.2,
     'noise_deviation': 0.05,
 
-    'training_epochs': 51,
+    'training_epochs': 101,
     'training_cycles': 50,
     'training_episodes': 16,
     'testing_gap': 1,
     'testing_episodes': 30,
-    'saving_gap': 25,
+    'saving_gap': 50,
 }
 seeds = [11, 22, 33, 44]
 seed_returns = []
 seed_success_rates = []
 path = os.path.dirname(os.path.realpath(__file__))
-path = os.path.join(path, 'PickAndPlace_HER')
+path = os.path.join(path, 'Joint_Reach_HER')
 
 for seed in seeds:
 
-    env = pmg.make_env(task='pick_and_place',
+    env = pmg.make_env(task='reach',
                        gripper='parallel_jaw',
+                       joint_control=True,
                        render=False,
                        binary_reward=True,
                        max_episode_steps=50,
