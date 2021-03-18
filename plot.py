@@ -50,10 +50,11 @@ def smoothed_plot_multi_line(file, data,
     plt.close()
 
 
-def smoothed_plot_mean_deviation(file, data_dict_list, legend=None, title=None, file_formats='png',
+def smoothed_plot_mean_deviation(file, data_dict_list, legend=None, title=None, file_formats='png', font_size=12,
                                  x_label='Timesteps', y_label="Success rate", ylim=(None, None), window=5,
                                  legend_title=None, legend_loc='lower left',
                                  legend_bbox_to_anchor=(0, 0.98), legend_ncol=4, legend_frame=False):
+    plt.rcParams.update({'font.size': font_size})
     colors = ['tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple', 'tab:brown']
     plt.ylabel(y_label)
     if ylim[0] is not None:
@@ -63,7 +64,7 @@ def smoothed_plot_mean_deviation(file, data_dict_list, legend=None, title=None, 
     if not isinstance(data_dict_list, list):
         data_dict_list = [data_dict_list]
     if x_label == "Epoch":
-        x_tick_interval = len(data_dict_list[0]["mean"]) // 10
+        x_tick_interval = len(data_dict_list[0]["mean"]) // 5
         plt.xticks([n * x_tick_interval for n in range(11)])
 
     N = len(data_dict_list[0]["mean"])
