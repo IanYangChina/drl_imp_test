@@ -23,7 +23,7 @@ algo_params = {
     'random_action_chance': 0.2,
     'noise_deviation': 0.05,
 
-    'curriculum': True,
+    'curriculum': False,
 
     'training_epochs': 101,
     'training_cycles': 50,
@@ -31,23 +31,26 @@ algo_params = {
     'testing_gap': 1,
     'testing_episodes': 30,
     'saving_gap': 50,
+
+    'cuda_device_id': 1
 }
 seeds = [11, 22, 33, 44]
 seed_returns = []
 seed_success_rates = []
 num_total_episodes = algo_params['training_epochs']*algo_params['training_cycles']*algo_params['training_episodes']
 path = os.path.dirname(os.path.realpath(__file__))
-path = os.path.join(path, 'ChestPush_2_crcl')
+path = os.path.join(path, 'ChestPickAndPlace_2')
 
 for seed in seeds:
 
-    env = pmg.make_env(task='chest_push',
+    env = pmg.make_env(task='chest_pick_and_place',
                        gripper='parallel_jaw',
                        num_block=2,
+                       max_episode_steps=100,
                        render=False,
                        binary_reward=True,
                        image_observation=False,
-                       use_curriculum=True,
+                       use_curriculum=False,
                        num_goals_to_generate=num_total_episodes)
 
     seed_path = path + '/seed'+str(seed)
