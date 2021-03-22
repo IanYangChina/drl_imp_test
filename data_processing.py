@@ -5,7 +5,7 @@ import pylab
 
 path = os.getcwd()
 
-env = 'Slide'
+env = 'Reach'
 data = 'success_rate'
 
 mujoco_ddpg = json.load(open(os.path.join(path, 'exp_multi_goal', 'ddpg_mujoco_gym', env, data+'_statistic.json')))
@@ -24,7 +24,7 @@ plot.smoothed_plot_mean_deviation(file=os.path.join(path, 'src', data+'_'+env),
                                   # legend_title=env+' (4 seeds)',
                                   # legend_loc='lower left', legend_bbox_to_anchor=(0.1, 0.98), legend_ncol=2, legend_frame=False,
                                   window=5,
-                                  x_label='Epoch', y_label='Average test returns')
+                                  x_label='Epoch', y_label='Average test success rates')
 
 # fig = pylab.figure()
 # figlegend = pylab.figure(figsize=(7, 0.15))
