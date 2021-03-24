@@ -1,5 +1,4 @@
 import os
-import json
 import plot
 import pybullet_multigoal_gym as pmg
 from drl_implementation import GoalConditionedDDPG
@@ -32,37 +31,33 @@ algo_params = {
     'testing_gap': 1,
     'testing_episodes': 30,
     'saving_gap': 50,
-
-    'cuda_device_id': 1
 }
 seeds = [11, 22, 33, 44]
 seed_returns = []
 seed_success_rates = []
 num_total_episodes = algo_params['training_epochs']*algo_params['training_cycles']*algo_params['training_episodes']
 path = os.path.dirname(os.path.realpath(__file__))
-path = os.path.join(path, 'BlockRearrange_2_crcl')
+path = os.path.join(path, 'ChestPush_1_crcl')
 
 for seed in seeds:
 
-    # env = pmg.make_env(task='block_rearrange',
-    #                    gripper='parallel_jaw',
-    #                    num_block=2,
-    #                    render=False,
-    #                    binary_reward=True,
-    #                    image_observation=False,
-    #                    use_curriculum=True,
-    #                    num_goals_to_generate=num_total_episodes)
+    env = pmg.make_env(task='chest_push',
+                       gripper='parallel_jaw',
+                       num_block=1,
+                       render=False,
+                       binary_reward=True,
+                       image_observation=False,
+                       use_curriculum=True,
+                       num_goals_to_generate=num_total_episodes)
 
     seed_path = path + '/seed'+str(seed)
 
-    # agent = GoalConditionedDDPG(algo_params=algo_params, env=env, path=seed_path, seed=seed)
-    # agent.run(test=False)
-#     seed_returns.append(agent.statistic_dict['epoch_test_return'])
-#     seed_success_rates.append(agent.statistic_dict['epoch_test_success_rate'])
-    seed_returns.append(json.load(open(os.path.join(seed_path, 'data', 'epoch_test_return.json'))))
-    seed_success_rates.append(json.load(open(os.path.join(seed_path, 'data', 'epoch_test_success_rate.json'))))
-#     del env, agent
-#
+    agent = GoalConditionedDDPG(algo_params=algo_params, env=env, path=seed_path, seed=seed)
+    agent.run(test=False)
+    seed_returns.append(agent.statistic_dict['epoch_test_return'])
+    seed_success_rates.append(agent.statistic_dict['epoch_test_success_rate'])
+    del env, agent
+
 return_statistic = plot.get_mean_and_deviation(seed_returns, save_data=True,
                                                file_name=os.path.join(path, 'return_statistic.json'))
 plot.smoothed_plot_mean_deviation(path + '/returns', return_statistic, x_label='Epoch', y_label='Average returns')
