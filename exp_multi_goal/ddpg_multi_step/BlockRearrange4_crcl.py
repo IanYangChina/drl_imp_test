@@ -33,7 +33,7 @@ algo_params = {
     'testing_episodes': 30,
     'saving_gap': 50,
 
-    'cuda_device_id': 1
+#    'cuda_device_id': 1
 }
 seeds = [11, 22, 33, 44]
 seed_returns = []
