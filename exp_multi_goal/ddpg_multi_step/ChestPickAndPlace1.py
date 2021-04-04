@@ -25,14 +25,12 @@ algo_params = {
 
     'curriculum': False,
 
-    'training_epochs': 101,
+    'training_epochs': 51,
     'training_cycles': 50,
     'training_episodes': 16,
     'testing_gap': 1,
     'testing_episodes': 30,
     'saving_gap': 50,
-
-    'cuda_device_id': 1
 }
 seeds = [11, 22, 33, 44]
 seed_returns = []

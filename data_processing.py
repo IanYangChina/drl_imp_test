@@ -39,7 +39,7 @@ path = os.getcwd()
 #                  'center', handlelength=0.1, ncol=4, frameon=False)
 # figlegend.savefig(path+'/src/single_step_task_legend.pdf', dpi=500)
 
-env = 'BlockStack'
+env = 'BlockRearrange'
 data = 'success_rate'
 
 d1 = json.load(open(os.path.join(path, 'exp_multi_goal', 'ddpg_multi_step', env+'_2', data+'_statistic.json')))
@@ -49,14 +49,14 @@ d4 = json.load(open(os.path.join(path, 'exp_multi_goal', 'ddpg_multi_step', env+
 
 plot.smoothed_plot_mean_deviation(file=os.path.join(path, 'src', data+'_'+env),
                                   data_dict_list=[d1, d2, d3, d4],
-                                  file_formats=['pdf'], font_size=22,
-                                  title=env,
+                                  file_formats=['pdf'], font_size=20,
+                                  # title=env,
                                   ylim=(-0.05, 1.05),
-                                  y_axis_off=True,
-                                  legend=['2 block',
-                                          '2 block crcl',
-                                          '3 block crcl',
-                                          '4 block crcl'],
+                                  # y_axis_off=True,
+                                  legend=['2 block (100 epo)',
+                                          '2 block crcl (100 epo)',
+                                          '3 block crcl (100 epo)',
+                                          '4 block crcl (150 epo)'],
                                   # legend_title=env+' (4 seeds)',
                                   legend_loc='upper right',
                                   dot_marker_legend=True,

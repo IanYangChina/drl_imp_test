@@ -25,7 +25,7 @@ algo_params = {
 
     'curriculum': False,
 
-    'training_epochs': 101,
+    'training_epochs': 51,
     'training_cycles': 50,
     'training_episodes': 16,
     'testing_gap': 1,

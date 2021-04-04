@@ -25,7 +25,7 @@ algo_params = {
 
     'curriculum': True,
 
-    'training_epochs': 101,
+    'training_epochs': 51,
     'training_cycles': 50,
     'training_episodes': 16,
     'testing_gap': 1,
@@ -39,11 +39,11 @@ seed_returns = []
 seed_success_rates = []
 num_total_episodes = algo_params['training_epochs']*algo_params['training_cycles']*algo_params['training_episodes']
 path = os.path.dirname(os.path.realpath(__file__))
-path = os.path.join(path, 'ChestPickAndPlace_2_crcl')
+path = os.path.join(path, 'BlockRearrange_2_crcl')
 
 for seed in seeds:
 
-    env = pmg.make_env(task='chest_pick_and_place',
+    env = pmg.make_env(task='block_rearrange',
                        gripper='parallel_jaw',
                        num_block=2,
                        render=False,
@@ -62,10 +62,10 @@ for seed in seeds:
 
 return_statistic = plot.get_mean_and_deviation(seed_returns, save_data=True,
                                                file_name=os.path.join(path, 'return_statistic.json'))
-plot.smoothed_plot_mean_deviation(path + '/returns', return_statistic, x_label='Epoch', y_label='Average returns')
+plot.smoothed_plot_mean_deviation(path + '/returns.png', return_statistic, x_label='Epoch', y_label='Average returns')
 
 
 success_rate_statistic = plot.get_mean_and_deviation(seed_success_rates, save_data=True,
                                                      file_name=os.path.join(path, 'success_rate_statistic.json'))
-plot.smoothed_plot_mean_deviation(path + '/success_rates', success_rate_statistic,
+plot.smoothed_plot_mean_deviation(path + '/success_rates.png', success_rate_statistic,
                                   x_label='Epoch', y_label='Success rates')

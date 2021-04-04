@@ -96,7 +96,7 @@ def smoothed_plot_mean_deviation(file, data_dict_list, legend=None, title=None, 
 
     if legend is not None:
         plt.legend(handles, legend, handlelength=handlelength,
-                   title=legend_title, loc=legend_loc, labelspacing=0.2,
+                   title=legend_title, loc=legend_loc, labelspacing=0.15,
                    bbox_to_anchor=legend_bbox_to_anchor, ncol=legend_ncol, frameon=legend_frame)
     if type(file_formats) == list:
         for file_format in file_formats:
