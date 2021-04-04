@@ -2,6 +2,7 @@ import json
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
+from matplotlib.lines import Line2D
 from copy import deepcopy as dcp
 mpl.use('Agg')
 
@@ -51,12 +52,16 @@ def smoothed_plot_multi_line(file, data,
 
 
 def smoothed_plot_mean_deviation(file, data_dict_list, legend=None, title=None, file_formats='png', font_size=12,
-                                 x_label='Timesteps', y_label="Success rate", ylim=(None, None), window=5,
-                                 legend_title=None, legend_loc='lower left',
-                                 legend_bbox_to_anchor=(0, 0.98), legend_ncol=4, legend_frame=False):
+                                 x_label='Timesteps', y_axis_off=False, y_label="Success rate", ylim=(None, None), window=5,
+                                 legend_title=None, legend_loc='lower left', dot_marker_legend=False,
+                                 legend_bbox_to_anchor=None, legend_ncol=4, legend_frame=False):
     plt.rcParams.update({'font.size': font_size})
     colors = ['tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple', 'tab:brown']
-    plt.ylabel(y_label)
+    if y_axis_off:
+        plt.ylabel(None)
+        plt.yticks([])
+    else:
+        plt.ylabel(y_label)
     if ylim[0] is not None:
         plt.ylim(ylim)
     plt.xlabel(x_label)
@@ -64,12 +69,13 @@ def smoothed_plot_mean_deviation(file, data_dict_list, legend=None, title=None, 
     if not isinstance(data_dict_list, list):
         data_dict_list = [data_dict_list]
     if x_label == "Epoch":
-        x_tick_interval = len(data_dict_list[0]["mean"]) // 5
-        plt.xticks([n * x_tick_interval for n in range(11)])
+        x_tick_interval = len(data_dict_list[-1]["mean"]) // 5
+        x_ticks = [n * x_tick_interval for n in range(11)]
+        plt.xticks(x_ticks)
 
-    N = len(data_dict_list[0]["mean"])
-    x = [i for i in range(N)]
     for i in range(len(data_dict_list)):
+        N = len(data_dict_list[i]["mean"])
+        x = [i for i in range(N)]
         case_data = data_dict_list[i]
         for key in case_data:
             running_avg = np.empty(N)
@@ -81,8 +87,17 @@ def smoothed_plot_mean_deviation(file, data_dict_list, legend=None, title=None, 
         plt.fill_between(x, case_data["upper"], case_data["lower"], alpha=0.3, color=colors[i], label='_nolegend_')
         plt.plot(x, case_data["mean"], color=colors[i])
 
+    if dot_marker_legend:
+        handles = [Line2D([0], [0], marker='o', markersize=10, color=colors[i]) for i in range(len(data_dict_list))]
+        handlelength = 0.1
+    else:
+        handles = [Line2D([0], [0], color=colors[i]) for i in range(len(data_dict_list))]
+        handlelength = 2
+
     if legend is not None:
-        plt.legend(legend, title=legend_title, loc=legend_loc, bbox_to_anchor=legend_bbox_to_anchor, ncol=legend_ncol, frameon=legend_frame)
+        plt.legend(handles, legend, handlelength=handlelength,
+                   title=legend_title, loc=legend_loc, labelspacing=0.2,
+                   bbox_to_anchor=legend_bbox_to_anchor, ncol=legend_ncol, frameon=legend_frame)
     if type(file_formats) == list:
         for file_format in file_formats:
             plt.savefig(file+'.'+file_format, bbox_inches='tight', dpi=500, format=file_format)
