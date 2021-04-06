@@ -32,7 +32,7 @@ algo_params = {
     'testing_episodes': 30,
     'saving_gap': 50,
 }
-seeds = [11, 22, 33, 44]
+seeds = [33, 44]
 seed_returns = []
 seed_success_rates = []
 num_total_episodes = algo_params['training_epochs']*algo_params['training_cycles']*algo_params['training_episodes']
