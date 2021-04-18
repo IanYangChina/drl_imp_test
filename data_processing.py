@@ -39,13 +39,13 @@ path = os.getcwd()
 #                  'center', handlelength=0.1, ncol=4, frameon=False)
 # figlegend.savefig(path+'/src/single_step_task_legend.pdf', dpi=500)
 
-env = 'BlockRearrange'
+env = 'ChestPush'
 data = 'success_rate'
 
-d1 = json.load(open(os.path.join(path, 'exp_multi_goal', 'ddpg_multi_step', env+'_2', data+'_statistic.json')))
-d2 = json.load(open(os.path.join(path, 'exp_multi_goal', 'ddpg_multi_step', env+'_2_crcl', data+'_statistic.json')))
-d3 = json.load(open(os.path.join(path, 'exp_multi_goal', 'ddpg_multi_step', env+'_3_crcl', data+'_statistic.json')))
-d4 = json.load(open(os.path.join(path, 'exp_multi_goal', 'ddpg_multi_step', env+'_4_crcl', data+'_statistic.json')))
+d1 = json.load(open(os.path.join(path, 'exp_multi_goal', 'ddpg_multi_step', env+'_1', data+'_statistic.json')))
+d2 = json.load(open(os.path.join(path, 'exp_multi_goal', 'ddpg_multi_step', env+'_1_crcl', data+'_statistic.json')))
+d3 = json.load(open(os.path.join(path, 'exp_multi_goal', 'ddpg_multi_step', env+'_2_crcl', data+'_statistic.json')))
+d4 = json.load(open(os.path.join(path, 'exp_multi_goal', 'ddpg_multi_step', env+'_3_crcl', data+'_statistic.json')))
 
 plot.smoothed_plot_mean_deviation(file=os.path.join(path, 'src', data+'_'+env),
                                   data_dict_list=[d1, d2, d3, d4],
@@ -53,10 +53,10 @@ plot.smoothed_plot_mean_deviation(file=os.path.join(path, 'src', data+'_'+env),
                                   # title=env,
                                   ylim=(-0.05, 1.05),
                                   # y_axis_off=True,
-                                  legend=['2 block (50 epo)',
-                                          '2 block crcl (50 epo)',
-                                          '3 block crcl (100 epo)',
-                                          '4 block crcl (150 epo)'],
+                                  legend=['1 block (50 epo)',
+                                          '1 block crcl (50 epo)',
+                                          '2 block crcl (100 epo)',
+                                          '3 block crcl (150 epo)'],
                                   # legend_title=env+' (4 seeds)',
                                   legend_loc='upper right',
                                   dot_marker_legend=True,
