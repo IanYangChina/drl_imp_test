@@ -56,7 +56,8 @@ def smoothed_plot_mean_deviation(file, data_dict_list, legend=None, title=None, 
                                  legend_title=None, legend_loc='lower left', dot_marker_legend=False,
                                  legend_bbox_to_anchor=None, legend_ncol=4, legend_frame=False):
     plt.rcParams.update({'font.size': font_size})
-    colors = ['tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple', 'tab:brown']
+    colors = ['tab:gray', 'tab:gray', 'tab:gray', 'tab:gray', 'tab:gray', 'tab:gray']
+    linestyles = ['-', '--', '-.', ':']
     if y_axis_off:
         plt.ylabel(None)
         plt.yticks([])
@@ -85,14 +86,14 @@ def smoothed_plot_mean_deviation(file, data_dict_list, legend=None, title=None, 
             case_data[key] = dcp(running_avg)
 
         plt.fill_between(x, case_data["upper"], case_data["lower"], alpha=0.3, color=colors[i], label='_nolegend_')
-        plt.plot(x, case_data["mean"], color=colors[i])
+        plt.plot(x, case_data["mean"], color=colors[i], linestyle=linestyles[i])
 
     if dot_marker_legend:
-        handles = [Line2D([0], [0], marker='o', markersize=10, color=colors[i]) for i in range(len(data_dict_list))]
+        handles = [Line2D([0], [0], marker='o', markersize=10, color=colors[i], linestyle=linestyles[i]) for i in range(len(data_dict_list))]
         handlelength = 0.1
     else:
-        handles = [Line2D([0], [0], color=colors[i]) for i in range(len(data_dict_list))]
-        handlelength = 2
+        handles = [Line2D([0], [0], color=colors[i], linestyle=linestyles[i]) for i in range(len(data_dict_list))]
+        handlelength = 1
 
     if legend is not None:
         plt.legend(handles, legend, handlelength=handlelength,
